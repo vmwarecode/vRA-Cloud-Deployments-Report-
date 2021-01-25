@@ -94,10 +94,10 @@ ForEach ($project in $projects)
 	$projectname = $project.name
 	$projectid = $project.id
 	$group = $project.Group
-	$deployments = Get-vRA-Deployments | where{$_.projectId -eq $projectid}
+	$deployments = Get-vRA-Deployments | where {$_.project.id -eq $projectid}
 				if ($deployments)
 			{
-				$html += $deployments | select projectId,name,id,createdBy,createdAt,Status | ConvertTo-Html -As Table -Fragment -PreContent "<h2> Project Name - $projectname | Project ID - $projectid </h2>"
+				$html += $deployments | select {$_.project.id},{$_.project.name},name,id,createdBy,createdAt,Status | ConvertTo-Html -As Table -Fragment -PreContent "<h2> Project Name - $projectname | Project ID - $projectid </h2>"
 				ForEach ($deployment in $deployments)
 				{
 				$status = $deployment.status
